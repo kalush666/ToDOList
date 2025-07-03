@@ -6,9 +6,16 @@ import {
   API_CONFIG,
   ERROR_OPERATIONS,
   LOG_LEVELS,
+  API_ENDPOINTS,
 } from './constants';
 import { catchError, Observable, tap, of } from 'rxjs';
-import { User, CreateUserRequest, UpdateUserRequest } from './models/user';
+import {
+  User,
+  CreateUserRequest,
+  UpdateUserRequest,
+  LoginRequest,
+  AuthResponse,
+} from './models/user';
 
 const httpOptions = {
   headers: new HttpHeaders({ [HTTP_HEADERS.CONTENT_TYPE]: MIME_TYPES.JSON }),
@@ -28,6 +35,24 @@ export class ApiService {
       console.error(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
+  }
+
+  login(credentials: LoginRequest): Observable<AuthResponse> {
+    const url = `${API_CONFIG.BASE_URL}${API_ENDPOINTS.AUTH.LOGIN}`;
+    return this.client.post<AuthResponse>(url, credentials, httpOptions).pipe(
+      tap((response) => {
+        console.log(
+          `User logged in successfully: ${response.user.firstName} ${response.user.lastName}`
+        );
+        localStorage.setItem('auth_token', response.accessToken);
+      }),
+      catchError(
+        this.handleError(ERROR_OPERATIONS.LOGIN, {
+          accessToken: '',
+          user: {} as User,
+        })
+      )
+    );
   }
 
   getUser(id: string): Observable<User> {
