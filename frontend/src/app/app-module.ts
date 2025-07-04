@@ -15,9 +15,11 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { TaskComponent } from './task/task.component';
 
 @NgModule({
-  declarations: [App, LoginComponent, SignUpComponent],
+  declarations: [App, LoginComponent, SignUpComponent, TasksComponent, TaskComponent],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [
     provideBrowserGlobalErrorListeners(),

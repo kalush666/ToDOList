@@ -1,0 +1,28 @@
+<div class="task-container">
+  <div class="card task-card">
+    <div class="card-body">
+      <h6 class="task-title text-center">{{ task.title }}</h6>
+      <p class="task-description">{{ task.description }}</p>
+      <p class="task-due-date">📅 Due: {{ task.dueDate | date }}</p>
+      <div class="task-status">
+        <span>Status:</span>
+        <div class="status-controls">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              [checked]="task.completed"
+              (change)="toggleComplete()"
+              id="task-{{ task._id }}"
+            />
+            <label class="form-check-label" for="task-{{ task._id }}">
+              {{ task.completed ? "Completed" : "Pending" }}
+            </label>
+          </div>
+          <button class="btn btn-edit" (click)="editTask()">Edit</button>
+          <button class="btn btn-delete" (click)="deleteTask()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

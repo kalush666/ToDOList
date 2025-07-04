@@ -1,0 +1,16 @@
+<div class="tasks-container">
+  <div class="container">
+    <h1>My Tasks</h1>
+
+    <div class="tasks-grid" *ngIf="tasks.length > 0">
+      <app-task
+        [task]="task"
+        *ngFor="let task of tasks; let i = index"
+      ></app-task>
+    </div>
+
+    <div *ngIf="tasks.length === 0" class="no-tasks">
+      <p>No tasks found. Create your first task!</p>
+    </div>
+  </div>
+</div>
