@@ -7,7 +7,7 @@ import {
   ERROR_OPERATIONS,
   LOG_LEVELS,
   API_ENDPOINTS,
-} from './constants';
+} from '../constants';
 import { catchError, Observable, tap, of } from 'rxjs';
 import {
   User,
@@ -15,7 +15,7 @@ import {
   UpdateUserRequest,
   LoginRequest,
   AuthResponse,
-} from './models/user';
+} from '../models/user';
 
 const httpOptions = {
   headers: new HttpHeaders({ [HTTP_HEADERS.CONTENT_TYPE]: MIME_TYPES.JSON }),

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginRequest } from '../models/user';
-import { ApiService } from '../api.service';
+import { ApiService } from '../api/api.service';
 import { Router } from '@angular/router';
 
 @Component({
