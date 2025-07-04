@@ -1,42 +1,45 @@
-## 📋 ToDoList - Modern Task Management Application 📋 ToDoList - Modern Task Management Application
+## 📋 ToDoList - Modern Task Management Application
 
 [![NestJS](https://img.shields.io/badge/NestJS-v11.0.1-red)](https://nestjs.com/)
 [![Angular](https://img.shields.io/badge/Angular-v20.0.0-blue)](https://angular.io/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-v8.16.1-green)](https://www.mongodb.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-v5.7.3-blue)](https://www.typescriptlang.org/)
-[![JWT](https://img.shields.io/badge/JWT-Authentication-yellow)](https://jwt.io/)
+[![No JWT](https://img.shields.io/badge/Auth-Simple-green)](https://jwt.io/)
 
-A full-stack task management application built with NestJS, Angular, and MongoDB. This application features secure user authentication with JWT and bcrypt password hashing, allowing users to efficiently create, manage, and track their tasks with a clean and responsive user interface. The backend API is properly prefixed and secured with CORS configuration.
+A full-stack task management application built with NestJS, Angular, and MongoDB. This application features secure user authentication with bcrypt password hashing (without JWT complexity), allowing users to efficiently create, manage, and track their tasks with a beautiful and responsive user interface. The backend API is configured with CORS enabled for all origins.
 
 ## ✨ Features
 
 - **User Authentication & Authorization**
 
   - Secure registration and login with bcrypt password hashing
-  - JWT token-based authentication with secure storage
-  - Protection against unauthorized access
+  - Simple session-based authentication (JWT removed for simplicity)
+  - User signup and login functionality with form validation
+  - Password encryption using bcrypt for security
 
 - **Task Management**
 
-  - Create, read, update, and delete tasks (CRUD operations)
-  - Task categorization and filtering
-  - Due date tracking with optional reminders
-  - Completion status tracking
+  - View and display tasks with a beautiful card-based interface
+  - Task details including title, description, due date, and completion status
+  - Interactive checkboxes for marking tasks as complete/incomplete
+  - Task editing and deletion functionality (UI ready)
+  - Responsive grid layout for optimal viewing on all devices
 
 - **User Experience**
 
-  - Clean, intuitive interface with modern design
-  - Responsive layout for all device sizes
+  - Modern, beautiful interface with gradient backgrounds and glass-morphism effects
+  - Fully responsive design that works on desktop, tablet, and mobile
+  - Consistent styling across all components
+  - Smooth animations and hover effects
   - Form validation with helpful error messages
-  - Persistent login sessions
+  - Clean, intuitive navigation
 
 - **Security Features**
-  - CORS protection for API endpoints (configured in backend/main.ts)
-  - Password encryption using bcrypt with proper hashing
-  - Secure JWT implementation for authentication
+  - CORS enabled for all origins (development-friendly configuration)
+  - Password encryption using bcrypt with proper salt rounds
   - Form validation with class-validator
   - Input sanitization and validation
-  - Protection against common web vulnerabilities
+  - Secure API endpoint structure
 
 ## 🏗️ Tech Stack
 
@@ -44,22 +47,23 @@ A full-stack task management application built with NestJS, Angular, and MongoDB
 
 - **Framework**: NestJS v11.0.1
 - **Database**: MongoDB with Mongoose v8.16.1
-- **Authentication**: JWT (JSON Web Tokens) with @nestjs/jwt v11.0.0
-- **API**: RESTful API design with global '/api' prefix
+- **Authentication**: Simple authentication without JWT (removed for simplicity)
+- **API**: RESTful API design running on port 3000
 - **Validation**: Class-validator v0.14.2 & class-transformer v0.5.1 for DTO validation
 - **Security**: bcrypt v6.0.0 for password hashing
 - **Error Handling**: Consistent error responses with proper HTTP status codes
-- **CORS**: Configured for secure cross-origin requests
+- **CORS**: Enabled for all origins for development flexibility
 
 ### Frontend (Angular)
 
 - **Framework**: Angular v20.0.0
 - **State Management**: RxJS v7.8.0
 - **API Integration**: Angular HttpClient with proper API endpoint configuration
-- **UI Components**: Custom-styled components with CSS and Bootstrap v5.3.7
+- **UI Components**: Custom-styled components with modern CSS design
+- **Styling**: Beautiful gradient backgrounds, glass-morphism effects, and smooth animations
 - **Form Handling**: Reactive forms with validation
-- **Security**: JWT token storage in browser
-- **Navigation**: Angular Router with protected routes
+- **Responsive Design**: Grid layouts and responsive breakpoints for all devices
+- **Navigation**: Angular Router with component-based structure
 
 ## 🚀 Getting Started
 
@@ -90,9 +94,7 @@ Create a `.env` file in the backend directory with the following variables:
 ```
 PORT=3000
 MONGODB_URI=mongodb://localhost:27017/todolist
-# JWT Configuration - Make sure to replace with a strong, secure key in production
-JWT_SECRET=your_secure_jwt_secret_key_replace_in_production
-JWT_EXPIRATION=7d
+# Note: JWT has been removed from this application for simplicity
 ```
 
 #### Frontend Setup
@@ -113,7 +115,7 @@ cd backend
 npm run start:dev
 ```
 
-The backend server will start on http://localhost:3000 with API endpoints accessible at http://localhost:3000/api
+The backend server will start on http://localhost:3000 with API endpoints accessible directly (no '/api' prefix)
 
 Start the frontend:
 
@@ -127,7 +129,7 @@ The Angular development server will start and the application will be available 
 The application will be available at:
 
 - Frontend: http://localhost:4200
-- Backend API: http://localhost:3000/api (e.g., http://localhost:3000/api/auth/login)
+- Backend API: http://localhost:3000 (e.g., http://localhost:3000/auth/login)
 
 #### Production Build
 
@@ -171,7 +173,7 @@ npm run test
 ```
 backend/
 ├── src/
-│   ├── auth/             # Authentication module with JWT implementation
+│   ├── auth/             # Authentication module (simplified, no JWT)
 │   │   ├── dto/          # Data Transfer Objects for authentication
 │   ├── constants/        # Application constants
 │   ├── database/         # Database configuration
@@ -183,7 +185,7 @@ backend/
 │   │   ├── interfaces/   # TypeScript interfaces for user data
 │   │   ├── schemas/      # Mongoose schemas for users
 │   ├── app.module.ts     # Main application module
-│   └── main.ts           # Application entry point with CORS and API prefix config
+│   └── main.ts           # Application entry point with CORS configuration
 └── test/                 # Test files
 ```
 
@@ -194,7 +196,10 @@ frontend/
 ├── src/
 │   ├── app/
 │   │   ├── constants/    # Application constants including API endpoints
-│   │   ├── login/        # Login component with form validation
+│   │   ├── login/        # Login component with beautiful styling
+│   │   ├── sign-up/      # Signup component with form validation
+│   │   ├── tasks/        # Tasks list component with grid layout
+│   │   ├── task/         # Individual task component with card design
 │   │   ├── models/       # Data models/interfaces for tasks and users
 │   │   ├── api.service.ts # API service for backend communication
 │   │   ├── app-routing-module.ts # Routing configuration
@@ -225,13 +230,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📊 Current Status
 
-- ✅ User authentication (login) with JWT and bcrypt is implemented and working
-- ✅ API prefixing and CORS configuration are properly set up
-- ✅ Login functionality is fully implemented and tested
-- ✅ Frontend-backend communication is established
-- ⏳ Task management features to be implemented next
-- ⏳ User registration to be implemented
+- ✅ User authentication (login & signup) implemented and working
+- ✅ Beautiful, responsive UI with modern design and animations
+- ✅ CORS configuration properly set up for all origins
+- ✅ Backend API endpoints functioning correctly
+- ✅ Frontend-backend communication established
+- ✅ Task display functionality with beautiful card design
+- ✅ Task status management (complete/incomplete toggle)
+- ✅ Responsive grid layout for tasks
+- ✅ All components styled consistently with gradient themes
+- 🔄 Task editing and deletion functionality (UI ready, backend integration pending)
+- 🔄 Task creation functionality to be implemented
+- 🔄 User profile management features
 
 ---
 
-Built with ❤️ using NestJS and Angular
+Built with ❤️ using NestJS and Angular - Simplified and Beautiful!
