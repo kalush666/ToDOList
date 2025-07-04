@@ -30,4 +30,15 @@ export class TasksComponent implements OnInit {
       },
     });
   }
+
+  onTaskDeleted(taskId: string) {
+    this.tasks = this.tasks.filter((task) => task._id !== taskId);
+  }
+
+  onTaskUpdated(updatedTask: Task) {
+    const index = this.tasks.findIndex((task) => task._id === updatedTask._id);
+    if (index !== -1) {
+      this.tasks[index] = updatedTask;
+    }
+  }
 }

@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task';
+import { TasksApiService } from '../api/tasks-api.service';
 
 @Component({
   selector: 'app-task',
@@ -8,6 +9,8 @@ import { Task } from '../models/task';
   styleUrl: './task.component.css',
 })
 export class TaskComponent {
+  constructor(private api: TasksApiService) {}
+
   @Input() task: Task = {
     _id: '',
     userId: '',
@@ -19,7 +22,31 @@ export class TaskComponent {
     dueDate: new Date(),
   };
 
-  toggleComplete() {}
-  deleteTask() {}
+  @Output() taskDeleted = new EventEmitter<string>();
+  @Output() taskUpdated = new EventEmitter<Task>();
+
+  toggleComplete() {
+    this.api.toggleTaskStatus(this.task._id, !this.task.completed).subscribe({
+      next: (updatedTask) => {
+        this.task = updatedTask;
+        this.taskUpdated.emit(this.task);
+      },
+      error: (error) => {
+        console.error('Error toggling task completion:', error);
+      },
+    });
+  }
+
+  deleteTask() {
+    this.api.deleteTask(this.task._id).subscribe({
+      next: (response) => {
+        this.taskDeleted.emit(this.task._id);
+      },
+      error: (error) => {
+        console.error('Error deleting task:', error);
+      },
+    });
+  }
+
   editTask() {}
 }
