@@ -15,8 +15,12 @@
               (change)="toggleComplete()"
               id="task-{{ task._id }}"
             />
-            <label class="form-check-label" for="task-{{ task._id }}">
-              {{ task.completed ? "Completed" : "Pending" }}
+            <label
+              class="form-check-label"
+              [ngClass]="getStatusClass()"
+              for="task-{{ task._id }}"
+            >
+              {{ getTaskStatusText() }}
             </label>
           </div>
           <button class="btn btn-edit" (click)="editTask()">Edit</button>

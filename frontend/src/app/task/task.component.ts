@@ -48,5 +48,29 @@ export class TaskComponent {
     });
   }
 
+  getTaskStatusText(): string {
+    if (this.task.completed) {
+      return 'Completed';
+    }
+
+    if (this.task.dueDate && new Date(this.task.dueDate) < new Date()) {
+      return 'Overdue';
+    }
+
+    return 'Pending';
+  }
+
+  getStatusClass(): string {
+    if (this.task.completed) {
+      return 'status-completed';
+    }
+
+    if (this.task.dueDate && new Date(this.task.dueDate) < new Date()) {
+      return 'status-overdue';
+    }
+
+    return 'status-pending';
+  }
+
   editTask() {}
 }
