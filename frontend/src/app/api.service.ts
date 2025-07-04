@@ -55,6 +55,24 @@ export class ApiService {
     );
   }
 
+  signUp(credentials: CreateUserRequest): Observable<AuthResponse> {
+    const url = `${API_CONFIG.BASE_URL}${API_ENDPOINTS.AUTH.SIGNUP}`;
+    return this.client.post<AuthResponse>(url, credentials, httpOptions).pipe(
+      tap((response) => {
+        console.log(
+          `User signed up successfully: ${response.user.firstName} ${response.user.lastName}`
+        );
+        localStorage.setItem('auth_token', response.accessToken);
+      }),
+      catchError(
+        this.handleError(ERROR_OPERATIONS.CREATE_USER, {
+          accessToken: '',
+          user: {} as User,
+        })
+      )
+    );
+  }
+
   getUser(id: string): Observable<User> {
     const url = `${API_CONFIG.BASE_URL}/users/${id}`;
     return this.client.get<User>(url).pipe(

@@ -8,7 +8,7 @@ export const API_ENDPOINTS = {
   TASKS: '/tasks',
   AUTH: {
     LOGIN: '/auth/login',
-    REGISTER: '/auth/register',
+    SIGNUP: '/auth/signup',
     LOGOUT: '/auth/logout',
     REFRESH: '/auth/refresh',
   },

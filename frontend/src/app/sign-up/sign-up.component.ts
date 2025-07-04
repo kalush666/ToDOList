@@ -32,5 +32,6 @@ export class SignUpComponent {
     if (!this.isValid()) return;
     this.isLoading = true;
     this.errorMessage = '';
+  
   }
 }
