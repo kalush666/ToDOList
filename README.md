@@ -90,7 +90,8 @@ Create a `.env` file in the backend directory with the following variables:
 ```
 PORT=3000
 MONGODB_URI=mongodb://localhost:27017/todolist
-JWT_SECRET=your_secure_jwt_secret_key
+# JWT Configuration - Make sure to replace with a strong, secure key in production
+JWT_SECRET=your_secure_jwt_secret_key_replace_in_production
 JWT_EXPIRATION=7d
 ```
 

@@ -1,9 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { LoginDto, LoginResponseDto } from './dto/auth.dto';
+import {
+  LoginDto,
+  LoginResponseDto,
+  SignUpDto,
+  SignUpResponseDto,
+} from './dto/auth.dto';
 import { UserService } from '../user/user.service';
 import { UserDocument } from '../user/interfaces/user.interface';
 import * as bcrypt from 'bcrypt';
+import { BCRYPT_SALT_ROUNDS } from '../constants/auth.constants';
 
 @Injectable()
 export class AuthService {
@@ -41,6 +47,39 @@ export class AuthService {
         firstName: userDoc.firstName,
         lastName: userDoc.lastName,
         email: userDoc.email,
+      },
+    };
+  }
+
+  async signUp(signUpDto: SignUpDto): Promise<SignUpResponseDto> {
+    const { firstName, lastName, email, password } = signUpDto;
+
+    const existingUser = await this.userService.findByEmail(email);
+    if (existingUser) {
+      throw new UnauthorizedException('Email already exists');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
+
+    const newUser = await this.userService.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+    });
+
+    const payload = {
+      sub: newUser._id.toString(),
+      email: newUser.email,
+    };
+
+    return {
+      accessToken: this.jwtService.sign(payload),
+      user: {
+        _id: newUser._id.toString(),
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        email: newUser.email,
       },
     };
   }

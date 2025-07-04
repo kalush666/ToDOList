@@ -4,6 +4,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UserModule } from '../user/user.module';
+import {
+  JWT_DEFAULT_SECRET,
+  JWT_DEFAULT_EXPIRATION,
+  JWT_SECRET_ENV_KEY,
+  JWT_EXPIRATION_ENV_KEY,
+} from '../constants/auth.constants';
 
 @Module({
   imports: [
@@ -11,9 +17,12 @@ import { UserModule } from '../user/user.module';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET') || 'super-secret-key',
+        secret:
+          configService.get<string>(JWT_SECRET_ENV_KEY) || JWT_DEFAULT_SECRET,
         signOptions: {
-          expiresIn: configService.get<string>('JWT_EXPIRATION') || '7d',
+          expiresIn:
+            configService.get<string>(JWT_EXPIRATION_ENV_KEY) ||
+            JWT_DEFAULT_EXPIRATION,
         },
       }),
       inject: [ConfigService],

@@ -5,6 +5,7 @@ import { User } from './schemas/user.schemas';
 import { UserDocument } from './interfaces/user.interface';
 import { CreateUserDto, UpdateUserDto, UserResponseDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
+import { BCRYPT_SALT_ROUNDS } from '../constants/auth.constants';
 
 @Injectable()
 export class UserService {
@@ -13,7 +14,10 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserResponseDto> {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const hashedPassword = await bcrypt.hash(
+      createUserDto.password,
+      BCRYPT_SALT_ROUNDS,
+    );
 
     const createdUser = new this.userModel({
       ...createUserDto,
