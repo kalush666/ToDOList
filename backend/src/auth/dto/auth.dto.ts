@@ -1,4 +1,4 @@
-import { IsEmail, isNotEmpty, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class LoginDto {
   @IsEmail({}, { message: 'Please provide a valid email' })
@@ -10,9 +10,11 @@ export class LoginDto {
 }
 
 export class SignUpDto {
+  @IsNotEmpty()
   @IsString()
   firstName: string;
 
+  @IsNotEmpty()
   @IsString()
   lastName: string;
 
@@ -25,7 +27,6 @@ export class SignUpDto {
 }
 
 export class LoginResponseDto {
-  accessToken: string;
   user: {
     _id: string;
     firstName: string;
@@ -35,7 +36,6 @@ export class LoginResponseDto {
 }
 
 export class SignUpResponseDto {
-  accessToken: string;
   user: {
     _id: string;
     firstName: string;

@@ -4,8 +4,6 @@ import {
   IsString,
   MinLength,
   IsOptional,
-  IsBoolean,
-  IsEnum,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -53,14 +51,4 @@ export class UserResponseDto {
   email: string;
   createdAt: Date;
   updatedAt: Date;
-}
-
-export class LoginDto {
-  @IsNotEmpty()
-  @IsEmail()
-  email: string;
-
-  @IsNotEmpty()
-  @IsString()
-  password: string;
 }

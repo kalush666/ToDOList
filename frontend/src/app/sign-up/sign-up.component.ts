@@ -32,6 +32,21 @@ export class SignUpComponent {
     if (!this.isValid()) return;
     this.isLoading = true;
     this.errorMessage = '';
-  
+
+    this.api.signUp(this.user).subscribe({
+      next: (response) => {
+        if (response.user && response.user._id) {
+          localStorage.setItem('user_id', response.user._id);
+          this.router.navigate(['/tasks']);
+        } else {
+          this.errorMessage = 'Invalid response from server';
+        }
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.errorMessage = 'Failed to create account';
+        this.isLoading = false;
+      },
+    });
   }
 }

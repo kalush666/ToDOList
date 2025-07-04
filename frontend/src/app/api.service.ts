@@ -32,7 +32,6 @@ export class ApiService {
     result?: T
   ) {
     return (error: any): Observable<T> => {
-      console.error(`${operation} failed: ${error.message}`);
       return of(result as T);
     };
   }
@@ -40,15 +39,8 @@ export class ApiService {
   login(credentials: LoginRequest): Observable<AuthResponse> {
     const url = `${API_CONFIG.BASE_URL}${API_ENDPOINTS.AUTH.LOGIN}`;
     return this.client.post<AuthResponse>(url, credentials, httpOptions).pipe(
-      tap((response) => {
-        console.log(
-          `User logged in successfully: ${response.user.firstName} ${response.user.lastName}`
-        );
-        localStorage.setItem('auth_token', response.accessToken);
-      }),
       catchError(
         this.handleError(ERROR_OPERATIONS.LOGIN, {
-          accessToken: '',
           user: {} as User,
         })
       )
@@ -58,15 +50,8 @@ export class ApiService {
   signUp(credentials: CreateUserRequest): Observable<AuthResponse> {
     const url = `${API_CONFIG.BASE_URL}${API_ENDPOINTS.AUTH.SIGNUP}`;
     return this.client.post<AuthResponse>(url, credentials, httpOptions).pipe(
-      tap((response) => {
-        console.log(
-          `User signed up successfully: ${response.user.firstName} ${response.user.lastName}`
-        );
-        localStorage.setItem('auth_token', response.accessToken);
-      }),
       catchError(
         this.handleError(ERROR_OPERATIONS.CREATE_USER, {
-          accessToken: '',
           user: {} as User,
         })
       )
@@ -75,43 +60,39 @@ export class ApiService {
 
   getUser(id: string): Observable<User> {
     const url = `${API_CONFIG.BASE_URL}/users/${id}`;
-    return this.client.get<User>(url).pipe(
-      tap((user) =>
-        console.log(`Fetched user: ${user.firstName} ${user.lastName}`)
-      ),
-      catchError(this.handleError(ERROR_OPERATIONS.FETCH_USER, {} as User))
-    );
+    return this.client
+      .get<User>(url)
+      .pipe(
+        catchError(this.handleError(ERROR_OPERATIONS.FETCH_USER, {} as User))
+      );
   }
 
   createUser(userRequest: CreateUserRequest): Observable<User> {
     const url = `${API_CONFIG.BASE_URL}/users`;
-    return this.client.post<User>(url, userRequest, httpOptions).pipe(
-      tap((newUser) =>
-        console.log(`Created user: ${newUser.firstName} ${newUser.lastName}`)
-      ),
-      catchError(this.handleError(ERROR_OPERATIONS.CREATE_USER, {} as User))
-    );
+    return this.client
+      .post<User>(url, userRequest, httpOptions)
+      .pipe(
+        catchError(this.handleError(ERROR_OPERATIONS.CREATE_USER, {} as User))
+      );
   }
 
   updateUser(id: string, userRequest: UpdateUserRequest): Observable<User> {
     const url = `${API_CONFIG.BASE_URL}/users/${id}`;
-    return this.client.put<User>(url, userRequest, httpOptions).pipe(
-      tap((updatedUser) =>
-        console.log(
-          `Updated user: ${updatedUser.firstName} ${updatedUser.lastName}`
-        )
-      ),
-      catchError(this.handleError(ERROR_OPERATIONS.UPDATE_USER, {} as User))
-    );
+    return this.client
+      .put<User>(url, userRequest, httpOptions)
+      .pipe(
+        catchError(this.handleError(ERROR_OPERATIONS.UPDATE_USER, {} as User))
+      );
   }
 
   deleteUser(id: string): Observable<void> {
     const url = `${API_CONFIG.BASE_URL}/users/${id}`;
-    return this.client.delete<void>(url).pipe(
-      tap(() => console.log(`Deleted user with id: ${id}`)),
-      catchError(
-        this.handleError<void>(ERROR_OPERATIONS.DELETE_USER, undefined)
-      )
-    );
+    return this.client
+      .delete<void>(url)
+      .pipe(
+        catchError(
+          this.handleError<void>(ERROR_OPERATIONS.DELETE_USER, undefined)
+        )
+      );
   }
 }

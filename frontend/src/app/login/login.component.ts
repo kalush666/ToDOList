@@ -27,18 +27,15 @@ export class LoginComponent {
 
       this.api.login(this.user).subscribe({
         next: (response) => {
-          console.log('Login successful:', response.user);
           if (response.user && response.user._id) {
             localStorage.setItem('user_id', response.user._id);
             this.router.navigate(['/tasks']);
           } else {
             this.errorMessage = 'Invalid response from server';
-            console.error('Invalid login response:', response);
           }
           this.isLoading = false;
         },
         error: (error) => {
-          console.error('Login failed:', error);
           this.errorMessage = 'Invalid email or password';
           this.isLoading = false;
         },

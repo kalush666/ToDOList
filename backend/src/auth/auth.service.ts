@@ -1,5 +1,4 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import {
   LoginDto,
   LoginResponseDto,
@@ -13,10 +12,7 @@ import { BCRYPT_SALT_ROUNDS } from '../constants/auth.constants';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private userService: UserService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private userService: UserService) {}
 
   async login(loginDto: LoginDto): Promise<LoginResponseDto> {
     const { email, password } = loginDto;
@@ -35,13 +31,7 @@ export class AuthService {
 
     const userDoc = user as UserDocument;
 
-    const payload = {
-      sub: userDoc._id.toString(),
-      email: userDoc.email,
-    };
-
     return {
-      accessToken: this.jwtService.sign(payload),
       user: {
         _id: userDoc._id.toString(),
         firstName: userDoc.firstName,
@@ -59,22 +49,14 @@ export class AuthService {
       throw new UnauthorizedException('Email already exists');
     }
 
-    const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUNDS);
-
     const newUser = await this.userService.create({
       firstName,
       lastName,
       email,
-      password: hashedPassword,
+      password,
     });
 
-    const payload = {
-      sub: newUser._id.toString(),
-      email: newUser.email,
-    };
-
     return {
-      accessToken: this.jwtService.sign(payload),
       user: {
         _id: newUser._id.toString(),
         firstName: newUser.firstName,

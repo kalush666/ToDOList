@@ -29,7 +29,6 @@ export class UserController {
     return await this.userService.findOne(id);
   }
 
-  @Get('')
   @Put(':id')
   async update(
     @Param('id') id: string,

@@ -3,19 +3,22 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  // Enable CORS for frontend requests
-  app.enableCors({
-    origin: ['http://localhost:4200', 'http://localhost:57360'], // Add your Angular frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    credentials: true,
+  const app = await NestFactory.create(AppModule, {
+    cors: true
   });
 
-  // Configure global path prefix for API routes
+  app.enableCors({
+    origin: ['http://localhost:4200', 'http://localhost:3000', 'http://localhost:57360'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    credentials: false,
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+  });
+
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT ?? 3000);
+  const port = 3000;
+  await app.listen(port);
+  console.log(`Application is running on: http://localhost:${port}`);
 }
 bootstrap();
