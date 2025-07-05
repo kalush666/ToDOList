@@ -353,8 +353,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Sample User Data
 
-**Existing User**: Jonathan Kalush (jonathan.kalush@gmail.com)
-**User ID**: `68690562f673305989e68b55`
+**Existing User**: Test User (user.test@example.com)
+**User ID**: `6869080401a8b0f1beac8f1b`
 
 ### Sample Task Data Examples
 
@@ -364,7 +364,7 @@ Use these JSON examples for testing with the correct user ID:
 {
   "title": "Implement User Authentication",
   "description": "Add JWT-based authentication system with login and registration functionality",
-  "userId": "68690562f673305989e68b55",
+  "userId": "6869080401a8b0f1beac8f1b",
   "dueDate": "2024-08-15T14:30:00.000Z"
 }
 ```
@@ -373,7 +373,7 @@ Use these JSON examples for testing with the correct user ID:
 {
   "title": "Add Real-time Notifications",
   "description": "Implement WebSocket-based notifications for task updates and reminders",
-  "userId": "68690562f673305989e68b55",
+  "userId": "6869080401a8b0f1beac8f1b",
   "dueDate": "2026-03-20T11:00:00.000Z"
 }
 ```
@@ -382,12 +382,10 @@ Use these JSON examples for testing with the correct user ID:
 
 To find your user ID for creating tasks:
 
-```bash
-# Using MongoDB directly
-docker exec -it todolist-mongodb mongosh --username root --password jonathan06 --authenticationDatabase admin todolist --eval "db.users.find({}, {_id: 1, firstName: 1, lastName: 1, email: 1}).pretty()"
+# via API (after authentication)
 
-# Or via API (after authentication)
 curl -X GET "http://localhost:3000/api/users"
+
 ```
 
 ## 🛠️ Development Tools & Resources
@@ -420,3 +418,4 @@ curl -X GET "http://localhost:3000/api/users"
 ---
 
 Built with ❤️ using NestJS, Angular, and Docker - Modern, Secure, and Scalable!
+```
