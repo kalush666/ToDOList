@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LoginRequest } from '../models/user';
-import { ApiService } from '../api/api.service';
+import { ApiService } from '../services/api.service';
+import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,7 +11,11 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  constructor(private api: ApiService, private router: Router) {}
+  constructor(
+    private api: ApiService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   user: LoginRequest = {
     email: '',
@@ -28,7 +33,7 @@ export class LoginComponent {
       this.api.login(this.user).subscribe({
         next: (response) => {
           if (response.user && response.user._id) {
-            localStorage.setItem('user_id', response.user._id);
+            this.userService.setCurrentUser(response.user);
             this.router.navigate(['/tasks']);
           } else {
             this.errorMessage = 'Invalid response from server';

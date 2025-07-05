@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../models/task';
-import { ApiService } from '../api/api.service';
-import { TasksApiService } from '../api/tasks-api.service';
+import { ApiService } from '../services/api.service';
+import { TasksApiService } from '../services/tasks-api.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-tasks',
@@ -10,13 +11,16 @@ import { TasksApiService } from '../api/tasks-api.service';
   styleUrl: './tasks.component.css',
 })
 export class TasksComponent implements OnInit {
-  constructor(private api: TasksApiService) {}
+  constructor(private api: TasksApiService, private userService: UserService) {}
   tasks: Task[] = [];
   userId: string | null = null;
+
   ngOnInit(): void {
-    this.userId = localStorage.getItem('user_id');
+    this.userId = this.userService.getCurrentUserId();
     if (this.userId) {
       this.fetchTasks(this.userId);
+    } else {
+      console.log('No user logged in');
     }
   }
 

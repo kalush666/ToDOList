@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task';
-import { TasksApiService } from '../api/tasks-api.service';
+import { TasksApiService } from '../services/tasks-api.service';
 
 @Component({
   selector: 'app-task',

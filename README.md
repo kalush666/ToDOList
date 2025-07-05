@@ -18,21 +18,23 @@ A full-stack task management application built with NestJS, Angular, and MongoDB
   - Password encryption using bcrypt for security
 
 - **Task Management**
-
   - View and display tasks with a beautiful card-based interface
   - Task details including title, description, due date, and completion status
   - Interactive checkboxes for marking tasks as complete/incomplete
-  - Task editing and deletion functionality (UI ready)
+  - Smart status indicators: Pending, Completed, and Overdue detection
+  - Task deletion functionality with real-time UI updates
+  - Task editing functionality (UI ready)
   - Responsive grid layout for optimal viewing on all devices
 
 - **User Experience**
-
   - Modern, beautiful interface with gradient backgrounds and glass-morphism effects
   - Fully responsive design that works on desktop, tablet, and mobile
-  - Consistent styling across all components
+  - Consistent styling across all components with color-coded status indicators
   - Smooth animations and hover effects
   - Form validation with helpful error messages
   - Clean, intuitive navigation
+  - Reactive user state management with RxJS BehaviorSubject
+  - Real-time task updates without page refreshes
 
 - **Security Features**
   - CORS enabled for all origins (development-friendly configuration)
@@ -57,13 +59,15 @@ A full-stack task management application built with NestJS, Angular, and MongoDB
 ### Frontend (Angular)
 
 - **Framework**: Angular v20.0.0
-- **State Management**: RxJS v7.8.0
-- **API Integration**: Angular HttpClient with proper API endpoint configuration
+- **State Management**: RxJS v7.8.0 with BehaviorSubject for reactive user management
+- **API Integration**: Angular HttpClient with comprehensive TasksApiService
 - **UI Components**: Custom-styled components with modern CSS design
 - **Styling**: Beautiful gradient backgrounds, glass-morphism effects, and smooth animations
 - **Form Handling**: Reactive forms with validation
+- **User Management**: Centralized UserService with reactive state management
 - **Responsive Design**: Grid layouts and responsive breakpoints for all devices
 - **Navigation**: Angular Router with component-based structure
+- **Architecture**: Clean component communication with @Input/@Output patterns
 
 ## 🚀 Getting Started
 
@@ -106,7 +110,25 @@ npm install
 
 ### Running the Application
 
-#### Development Mode
+#### Quick Start (Recommended)
+
+Use the provided batch files for easy development:
+
+```bash
+# For quick startup
+run.bat
+
+# For development with dependency management
+run-dev.bat
+```
+
+The batch files will automatically:
+- Check Node.js and npm installation
+- Install dependencies if missing (dev version)
+- Start both backend and frontend servers
+- Open separate command windows for monitoring
+
+#### Manual Development Mode
 
 Start the backend:
 
@@ -115,7 +137,7 @@ cd backend
 npm run start:dev
 ```
 
-The backend server will start on http://localhost:3000 with API endpoints accessible directly (no '/api' prefix)
+The backend server will start on http://localhost:3000 with API endpoints accessible at http://localhost:3000/api
 
 Start the frontend:
 
@@ -126,10 +148,13 @@ npm run start
 
 The Angular development server will start and the application will be available at http://localhost:4200
 
-The application will be available at:
+#### Application URLs
 
-- Frontend: http://localhost:4200
-- Backend API: http://localhost:3000 (e.g., http://localhost:3000/auth/login)
+- **Frontend**: http://localhost:4200
+- **Backend API**: http://localhost:3000/api
+- **Example Endpoints**: 
+  - Authentication: http://localhost:3000/api/auth/login
+  - Tasks: http://localhost:3000/api/tasks
 
 #### Production Build
 
@@ -195,18 +220,22 @@ backend/
 frontend/
 ├── src/
 │   ├── app/
+│   │   ├── api/          # API services (TasksApiService)
 │   │   ├── constants/    # Application constants including API endpoints
 │   │   ├── login/        # Login component with beautiful styling
 │   │   ├── sign-up/      # Signup component with form validation
 │   │   ├── tasks/        # Tasks list component with grid layout
 │   │   ├── task/         # Individual task component with card design
+│   │   ├── services/     # UserService for reactive state management
 │   │   ├── models/       # Data models/interfaces for tasks and users
-│   │   ├── api.service.ts # API service for backend communication
+│   │   ├── api.service.ts # Main API service for authentication
 │   │   ├── app-routing-module.ts # Routing configuration
 │   │   ├── app.html      # Main application template
 │   │   └── app.ts        # Main application component
 │   ├── styles.css        # Global styles
 │   └── index.html        # Main HTML file
+├── run.bat              # Quick start batch file
+└── run-dev.bat          # Development batch file with dependency management
 ```
 
 ## 🤝 Contributing
@@ -231,17 +260,30 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📊 Current Status
 
 - ✅ User authentication (login & signup) implemented and working
+- ✅ Reactive user state management with UserService and BehaviorSubject
 - ✅ Beautiful, responsive UI with modern design and animations
 - ✅ CORS configuration properly set up for all origins
 - ✅ Backend API endpoints functioning correctly
-- ✅ Frontend-backend communication established
+- ✅ Frontend-backend communication established with dedicated TasksApiService
 - ✅ Task display functionality with beautiful card design
-- ✅ Task status management (complete/incomplete toggle)
+- ✅ Task status management with smart indicators (Pending/Completed/Overdue)
+- ✅ Task deletion functionality with real-time UI updates
+- ✅ Task completion toggle with database synchronization
 - ✅ Responsive grid layout for tasks
 - ✅ All components styled consistently with gradient themes
-- 🔄 Task editing and deletion functionality (UI ready, backend integration pending)
+- ✅ Development automation with batch files for easy startup
+- ✅ Clean architecture with proper component communication patterns
 - 🔄 Task creation functionality to be implemented
+- 🔄 Task editing functionality (UI ready, backend integration pending)
 - 🔄 User profile management features
+
+## 🛠️ Development Tools
+
+- **`run.bat`** - Quick start script for development
+- **`run-dev.bat`** - Advanced startup with dependency management
+- **Reactive Architecture** - RxJS BehaviorSubject for state management
+- **Type Safety** - Full TypeScript support across frontend and backend
+- **Error Handling** - Comprehensive error handling and user feedback
 
 ---
 
