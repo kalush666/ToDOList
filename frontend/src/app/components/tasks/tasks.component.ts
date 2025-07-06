@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Task } from '../models/task';
-import { ApiService } from '../services/api.service';
-import { TasksApiService } from '../services/tasks-api.service';
-import { UserService } from '../services/user.service';
+import { Task } from '../../models/task';
+import { TasksApiService } from '../../services/tasks-api.service';
+import { UserService } from '../../services/user.service';
+import { TaskService } from '../../services/task.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -12,6 +13,7 @@ import { UserService } from '../services/user.service';
 })
 export class TasksComponent implements OnInit {
   constructor(private api: TasksApiService, private userService: UserService) {}
+
   tasks: Task[] = [];
   userId: string | null = null;
 
@@ -40,9 +42,8 @@ export class TasksComponent implements OnInit {
   }
 
   onTaskUpdated(updatedTask: Task) {
-    const index = this.tasks.findIndex((task) => task._id === updatedTask._id);
-    if (index !== -1) {
-      this.tasks[index] = updatedTask;
-    }
+    this.tasks = this.tasks.map((task) =>
+      task._id === updatedTask._id ? updatedTask : task
+    );
   }
 }

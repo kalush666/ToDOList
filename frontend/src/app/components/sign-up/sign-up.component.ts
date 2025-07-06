@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { CreateUserRequest, AuthResponse } from '../models/user';
-import { UserService } from '../services/user.service';
+import { CreateUserRequest, AuthResponse } from '../../models/user';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-sign-up',

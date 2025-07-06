@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { Task } from '../models/task';
-import { TasksApiService } from '../services/tasks-api.service';
+import { Task } from '../../models/task';
+import { TasksApiService } from '../../services/tasks-api.service';
+import { TaskService } from '../../services/task.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task',
@@ -9,7 +11,11 @@ import { TasksApiService } from '../services/tasks-api.service';
   styleUrl: './task.component.css',
 })
 export class TaskComponent {
-  constructor(private api: TasksApiService) {}
+  constructor(
+    private api: TasksApiService,
+    private tasksService: TaskService,
+    private router: Router
+  ) {}
 
   @Input() task: Task = {
     _id: '',
@@ -72,5 +78,8 @@ export class TaskComponent {
     return 'status-pending';
   }
 
-  editTask() {}
+  editTask() {
+    this.tasksService.setCurrentTask(this.task);
+    this.router.navigate(['/edit-task']);
+  }
 }
