@@ -9,6 +9,9 @@
         (taskUpdated)="onTaskUpdated($event)"
         *ngFor="let task of tasks; let i = index"
       ></app-task>
+      <button class="btn btn-primary add-task-button" (click)="onAddTask()">
+        Add Task
+      </button>
     </div>
 
     <div *ngIf="tasks.length === 0" class="no-tasks">

@@ -18,6 +18,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { TasksComponent } from './components/tasks/tasks.component';
 import { TaskComponent } from './components/task/task.component';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
+import { AddTaskComponent } from './components/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { EditTaskComponent } from './components/edit-task/edit-task.component';
     TasksComponent,
     TaskComponent,
     EditTaskComponent,
+    AddTaskComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [

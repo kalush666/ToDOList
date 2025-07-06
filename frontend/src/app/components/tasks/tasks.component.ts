@@ -2,17 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from '../../models/task';
 import { TasksApiService } from '../../services/tasks-api.service';
 import { UserService } from '../../services/user.service';
-import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
   standalone: false,
   templateUrl: './tasks.component.html',
-  styleUrl: './tasks.component.css',
+  styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-  constructor(private api: TasksApiService, private userService: UserService) {}
+  constructor(
+    private api: TasksApiService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   tasks: Task[] = [];
   userId: string | null = null;
@@ -45,5 +48,9 @@ export class TasksComponent implements OnInit {
     this.tasks = this.tasks.map((task) =>
       task._id === updatedTask._id ? updatedTask : task
     );
+  }
+
+  onAddTask() {
+    this.router.navigate(['/add-task']);
   }
 }
