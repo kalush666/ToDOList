@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Task } from '../../models/task';
 import { TasksApiService } from '../../services/tasks-api.service';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tasks',
@@ -11,16 +12,28 @@ import { Router } from '@angular/router';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
+  tasks: Task[] = [];
+  userId: string | null = null;
+  showAddTask = false;
+  showEditTask = false;
+  taskToEdit: Task | null = null;
+  private currentRoute = '';
+
   constructor(
     private api: TasksApiService,
     private userService: UserService,
-    private router: Router
-  ) {}
-
-  tasks: Task[] = [];
-  userId: string | null = null;
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        this.currentRoute = event.url;
+      });
+  }
 
   ngOnInit(): void {
+    this.currentRoute = this.router.url;
     this.userId = this.userService.getCurrentUserId();
     if (this.userId) {
       this.fetchTasks(this.userId);
@@ -48,9 +61,34 @@ export class TasksComponent implements OnInit {
     this.tasks = this.tasks.map((task) =>
       task._id === updatedTask._id ? updatedTask : task
     );
+    this.showEditTask = false;
+    this.taskToEdit = null;
   }
 
   onAddTask() {
-    this.router.navigate(['/add-task']);
+    this.showAddTask = true;
+  }
+
+  onTaskAdded(newTask: Task) {
+    this.tasks = [newTask, ...this.tasks];
+    this.showAddTask = false;
+  }
+
+  onEditTask(task: Task) {
+    this.taskToEdit = task;
+    this.showEditTask = true;
+  }
+
+  onCancelForm() {
+    this.showAddTask = false;
+    this.showEditTask = false;
+    this.taskToEdit = null;
+  }
+
+  isAddOrEditRoute(): boolean {
+    return (
+      this.currentRoute.includes('/add-task') ||
+      this.currentRoute.includes('/edit-task')
+    );
   }
 }

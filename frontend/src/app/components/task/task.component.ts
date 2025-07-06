@@ -1,21 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../../models/task';
 import { TasksApiService } from '../../services/tasks-api.service';
-import { TaskService } from '../../services/task.service';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task',
   standalone: false,
   templateUrl: './task.component.html',
-  styleUrl: './task.component.css',
+  styleUrls: ['./task.component.css'],
 })
 export class TaskComponent {
-  constructor(
-    private api: TasksApiService,
-    private tasksService: TaskService,
-    private router: Router
-  ) {}
+  constructor(private api: TasksApiService, private router: Router) {}
 
   @Input() task: Task = {
     _id: '',
@@ -30,6 +25,7 @@ export class TaskComponent {
 
   @Output() taskDeleted = new EventEmitter<string>();
   @Output() taskUpdated = new EventEmitter<Task>();
+  @Output() editTask = new EventEmitter<Task>();
 
   toggleComplete() {
     this.api.toggleTaskStatus(this.task._id, !this.task.completed).subscribe({
@@ -78,8 +74,10 @@ export class TaskComponent {
     return 'status-pending';
   }
 
-  editTask() {
-    this.tasksService.setCurrentTask(this.task);
-    this.router.navigate(['/edit-task']);
+  editTaskClicked() {
+    this.editTask.emit(this.task);
+    this.router.navigate(['tasks', 'edit-task'], {
+      queryParams: { taskId: this.task._id },
+    });
   }
 }

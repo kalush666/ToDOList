@@ -1,60 +1,58 @@
-<div class="edit-task-background">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-6 col-md-8 col-sm-10">
-        <div class="card add-task-card">
-          <div class="card-body">
-            <h2 class="add-task-title">Add Task</h2>
-            <form (ngSubmit)="onAddTask()" #taskaddForm="ngForm">
-              <div class="form-group">
-                <label for="title" class="form-label">Title</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  name="title"
-                  placeholder="Enter task title"
-                  required
-                  [(ngModel)]="taskToAdd.title"
-                />
-                <label for="description" class="form-label">Description</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="description"
-                  name="description"
-                  placeholder="Enter task description"
-                  required
-                  [(ngModel)]="taskToAdd.description"
-                />
-                <label for="dueDate" class="form-label">Due Date</label>
-                <input
-                  type="datetime-local"
-                  class="form-control"
-                  id="dueDate"
-                  name="dueDate"
-                  [value]="dueDateForInput"
-                  (change)="onDueDateChange($event)"
-                />
-                <div class="button-group">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    (click)="onCancel()"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    class="btn btn-primary"
-                    [disabled]="!taskaddForm.form.valid"
-                  >
-                    Add Task
-                  </button>
-                </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <div class="card add-task-card">
+        <div class="card-body">
+          <h2 class="add-task-title">Add Task</h2>
+          <form (ngSubmit)="onAddTask()" #taskaddForm="ngForm">
+            <div class="form-group">
+              <label for="title" class="form-label">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                placeholder="Enter task title"
+                required
+                [(ngModel)]="taskToAdd.title"
+              />
+              <label for="description" class="form-label">Description</label>
+              <input
+                type="text"
+                class="form-control"
+                id="description"
+                name="description"
+                placeholder="Enter task description"
+                required
+                [(ngModel)]="taskToAdd.description"
+              />
+              <label for="dueDate" class="form-label">Due Date</label>
+              <input
+                type="datetime-local"
+                class="form-control"
+                id="dueDate"
+                name="dueDate"
+                [value]="dueDateForInput"
+                (change)="onDueDateChange($event)"
+              />
+              <div class="button-group">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  (click)="onCancel()"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [disabled]="!taskaddForm.form.valid"
+                >
+                  Add Task
+                </button>
               </div>
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>

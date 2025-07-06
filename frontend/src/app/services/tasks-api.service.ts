@@ -18,6 +18,9 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class TasksApiService {
+  getTaskById(id: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(private client: HttpClient) {}
 
   private handleError<T>(
