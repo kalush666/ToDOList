@@ -142,12 +142,6 @@
   flex: 1;
 }
 
-.btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.25);
-  transform: translateY(-1px);
-}
-
 .btn-primary:disabled {
   opacity: 0.6;
   cursor: not-allowed;

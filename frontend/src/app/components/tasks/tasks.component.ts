@@ -29,6 +29,9 @@ export class TasksComponent implements OnInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         this.currentRoute = event.url;
+        if (this.currentRoute.startsWith('/tasks') && this.userId) {
+          this.fetchTasks(this.userId);
+        }
       });
   }
 
@@ -90,5 +93,11 @@ export class TasksComponent implements OnInit {
       this.currentRoute.includes('/add-task') ||
       this.currentRoute.includes('/edit-task')
     );
+  }
+
+  editProfile() {
+    this.router.navigate(['/profile'], {
+      queryParams: { userId: this.userId },
+    });
   }
 }
