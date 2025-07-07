@@ -5,7 +5,7 @@ import { User } from './schemas/user.schemas';
 import { UserDocument } from './interfaces/user.interface';
 import { CreateUserDto, UpdateUserDto, UserResponseDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
-import { BCRYPT_SALT_ROUNDS } from '../constants/auth.constants';
+import { BCRYPT_SALT_ROUNDS } from 'src/constants/auth.constants';
 
 @Injectable()
 export class UserService {

@@ -1,3 +1,4 @@
+import { ADMIN } from '../../../../backend/src/constants/roles.constants';
 export const API_CONFIG = {
   BASE_URL: 'http://localhost:3000/api',
   TIMEOUT: 10000,
@@ -12,6 +13,7 @@ export const API_ENDPOINTS = {
     LOGOUT: '/auth/logout',
     REFRESH: '/auth/refresh',
   },
+  ADMIN: '/admin',
 } as const;
 
 export const getApiUrl = (endpoint: string): string => {

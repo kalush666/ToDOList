@@ -8,7 +8,6 @@ import {
 import { UserService } from '../user/user.service';
 import { UserDocument } from '../user/interfaces/user.interface';
 import * as bcrypt from 'bcrypt';
-import { BCRYPT_SALT_ROUNDS } from '../constants/auth.constants';
 
 @Injectable()
 export class AuthService {

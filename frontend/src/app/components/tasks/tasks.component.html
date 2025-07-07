@@ -1,12 +1,16 @@
 <div class="tasks-container">
-  <img
-    src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-    alt="Edit Profile Picture"
-    class="profile-pic"
-    width="64"
-    height="64"
-    (click)="editProfile()"
-  />
+  <header>
+    <img
+      src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+      alt="Edit Profile Picture"
+      class="profile-pic"
+      width="64"
+      height="64"
+      (click)="editProfile()"
+    />
+    <button class="btn btn-danger">Log Out</button>
+    {{ isAdmin }}
+  </header>
   <div class="container">
     <h1>My Tasks</h1>
 

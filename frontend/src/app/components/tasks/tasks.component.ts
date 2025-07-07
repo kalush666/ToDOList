@@ -4,6 +4,7 @@ import { TasksApiService } from '../../services/tasks-api.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-tasks',
@@ -15,7 +16,8 @@ export class TasksComponent implements OnInit {
   constructor(
     private api: TasksApiService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private adminService: AdminService
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -26,6 +28,7 @@ export class TasksComponent implements OnInit {
         }
       });
   }
+  isAdmin: boolean = false;
   tasks: Task[] = [];
   userId: string | null = null;
   showAddTask = false;
@@ -41,6 +44,9 @@ export class TasksComponent implements OnInit {
     } else {
       console.log('No user logged in');
     }
+    this.adminService.canAccess().subscribe((canAccess: boolean) => {
+      this.isAdmin = canAccess;
+    });
   }
 
   fetchTasks(userId: string) {
