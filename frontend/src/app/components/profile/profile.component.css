@@ -1,3 +1,4 @@
+/* Profile Page Styles */
 .profile-container {
   min-height: 100vh;
   display: flex;
@@ -35,7 +36,15 @@
   transition: all 0.3s ease;
 }
 
-.btn-update {
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.btn-primary,
+.btn-danger {
   border: none;
   border-radius: 10px;
   padding: 0.75rem 2rem;
@@ -45,6 +54,26 @@
   letter-spacing: 0.5px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  flex: 1;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: #fff;
+}
+
+@media (max-width: 576px) {
+  .button-group {
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .btn-primary,
+  .btn-danger {
+    font-size: 0.95rem;
+    padding: 0.65rem 1rem;
+    width: 100%;
+  }
 }
 
 .profile-pic {

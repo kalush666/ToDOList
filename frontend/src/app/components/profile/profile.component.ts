@@ -60,4 +60,7 @@ export class ProfileComponent implements OnInit {
     });
     this.router.navigate(['/tasks']);
   }
+  onCancel() {
+    this.router.navigate(['/tasks']);
+  }
 }
