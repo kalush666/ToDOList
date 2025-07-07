@@ -31,10 +31,10 @@ A full-stack task management application built with NestJS, Angular, and MongoDB
   - Modern, beautiful interface with gradient backgrounds and glass-morphism effects
   - Fully responsive design that works on desktop, tablet, and mobile
   - Consistent styling across all components with color-coded status indicators
-  - Smooth animations and hover effects
+  - Smooth animations
   - Form validation with helpful error messages
   - Clean, intuitive navigation
-  - Reactive user state management with RxJS BehaviorSubject
+  - Reactive user state management with RxJS BehaviorSubject (singleton UserService)
   - Real-time task updates without page refreshes
 
 - **Security Features**
@@ -51,20 +51,21 @@ A full-stack task management application built with NestJS, Angular, and MongoDB
 - **Framework**: NestJS v11.0.1
 - **Database**: MongoDB v7.0 with Mongoose v8.16.1
 - **Authentication**: bcrypt v6.0.0 for password hashing
-- **API**: RESTful API design running on port 3000
+- **API**: RESTful API design running on port 3001 (configurable)
 - **Validation**: Class-validator v0.14.2 & class-transformer v0.5.1 for DTO validation
 - **Security**: bcrypt password hashing
 - **Error Handling**: Consistent error responses with proper HTTP status codes
 - **CORS**: Enabled for all origins for development flexibility
+- **Environment Config**: Uses `.env` file for configuration (see below)
 
 ### Frontend (Angular)
 
 - **Framework**: Angular v20.0.0 (latest stable)
-- **State Management**: RxJS v7.8.0 with BehaviorSubject for reactive user management
+- **State Management**: RxJS v7.8.0 with BehaviorSubject for reactive user management (singleton UserService)
 - **API Integration**: Angular HttpClient with comprehensive TasksApiService
 - **UI Components**: Custom-styled components with modern CSS design
 - **Styling**: Beautiful gradient backgrounds, glass-morphism effects, and smooth animations
-- **Form Handling**: Reactive forms with validation
+- **Form Handling**: Template-driven and reactive forms with validation
 - **User Management**: Centralized UserService with reactive state management
 - **Responsive Design**: Grid layouts and responsive breakpoints for all devices
 - **Navigation**: Angular Router with component-based structure
@@ -72,10 +73,9 @@ A full-stack task management application built with NestJS, Angular, and MongoDB
 
 ### Infrastructure & DevOps
 
-- **Database**: MongoDB v7.0 with automated initialization scripts
+- **Database**: MongoDB v7.0
 - **Development**: Hot-reloading enabled for both frontend and backend
 - **Security**: Environment-based configuration management
-- **Monitoring**: Health checks and container logging
 
 ## 🚀 Getting Started
 
@@ -97,10 +97,13 @@ cd ToDoList
 
 2. **Configure environment variables**
 
-```bash
-# Copy the example environment file
-cp .env.example .env
-# Edit .env with your MongoDB credentials
+Create a `.env` file in the `backend/` directory with the following content:
+
+```env
+MONGODB_URI=mongodb://localhost:27017/todolist
+PORT=3001
+JWT_SECRET=your-secret
+JWT_EXPIRATION=7d
 ```
 
 3. **Backend Setup**
@@ -108,9 +111,6 @@ cp .env.example .env
 ```bash
 cd backend
 npm install
-# Create .env file with:
-# MONGODB_URI=mongodb://localhost:27017/todolist
-# PORT=3000
 npm run start:dev
 ```
 
@@ -121,6 +121,8 @@ cd frontend
 npm install
 npm start
 ```
+
+Or use the provided `run.bat` script to start both backend and frontend in separate terminals on Windows.
 
 ## 🧪 Testing
 

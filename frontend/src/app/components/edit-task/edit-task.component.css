@@ -193,3 +193,8 @@
     width: 100%;
   }
 }
+
+input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 1;
+  display: block;
+}
