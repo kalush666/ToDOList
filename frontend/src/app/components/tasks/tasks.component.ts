@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../models/task';
 import { TasksApiService } from '../../services/tasks-api.service';
-import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-tasks',
@@ -12,18 +12,10 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./tasks.component.css'],
 })
 export class TasksComponent implements OnInit {
-  tasks: Task[] = [];
-  userId: string | null = null;
-  showAddTask = false;
-  showEditTask = false;
-  taskToEdit: Task | null = null;
-  private currentRoute = '';
-
   constructor(
     private api: TasksApiService,
     private userService: UserService,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
@@ -34,10 +26,16 @@ export class TasksComponent implements OnInit {
         }
       });
   }
+  tasks: Task[] = [];
+  userId: string | null = null;
+  showAddTask = false;
+  showEditTask = false;
+  taskToEdit: Task | null = null;
+  private currentRoute = '';
 
   ngOnInit(): void {
-    this.currentRoute = this.router.url;
-    this.userId = this.userService.getCurrentUserId();
+    this.userId = this.userService.getUserId();
+
     if (this.userId) {
       this.fetchTasks(this.userId);
     } else {
@@ -96,8 +94,6 @@ export class TasksComponent implements OnInit {
   }
 
   editProfile() {
-    this.router.navigate(['/profile'], {
-      queryParams: { userId: this.userId },
-    });
+    this.router.navigate(['/profile']);
   }
 }

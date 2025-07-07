@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UpdateUserRequest, User } from '../../models/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +12,7 @@ import { ApiService } from '../../services/api.service';
 })
 export class ProfileComponent implements OnInit {
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private userService: UserService,
     private userApi: ApiService,
     private router: Router
   ) {}
@@ -25,22 +26,15 @@ export class ProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.user.id = params['userId'] || '';
-    });
-    this;
-    this.userApi.getUser(this.user.id).subscribe({
-      next: (user: User) => {
-        if (user) {
-          this.user.firstName = user.firstName;
-          this.user.lastName = user.lastName;
-          this.user.email = user.email;
-        }
-      },
-      error: (error) => {
-        console.error('Failed to fetch user:', error);
-      },
-    });
+    const userFromService = this.userService.getUser();
+    if (userFromService) {
+      this.user.id = userFromService._id;
+      this.user.firstName = userFromService.firstName;
+      this.user.lastName = userFromService.lastName;
+      this.user.email = userFromService.email;
+    } else {
+      console.error('No user found in UserService');
+    }
   }
   isValid() {
     return this.user.firstName && this.user.lastName && this.user.email;

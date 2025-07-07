@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginRequest } from '../../models/user';
 import { ApiService } from '../../services/api.service';
-import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,7 @@ export class LoginComponent {
       this.api.login(this.user).subscribe({
         next: (response) => {
           if (response.user && response.user._id) {
-            this.userService.setCurrentUser(response.user);
+            this.userService.setUser(response.user);
             this.router.navigate(['/tasks']);
           } else {
             this.errorMessage = 'Invalid response from server';

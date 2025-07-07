@@ -6,29 +6,26 @@ import { User } from '../models/user';
   providedIn: 'root',
 })
 export class UserService {
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
-
   constructor() {}
+  private userSubject = new BehaviorSubject<User | null>(null);
 
-  setCurrentUser(user: User): void {
-    this.currentUserSubject.next(user);
+  setUser(user: User) {
+    this.userSubject.next(user);
+    sessionStorage.setItem('userId', user._id);
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+  getUser(): User | null {
+    const user = this.userSubject.getValue();
+    if (user) {
+      return user;
+    }
+    return null;
   }
-
-  getCurrentUserId(): string | null {
-    const user = this.getCurrentUser();
-    return user ? user._id : null;
-  }
-
-  clearCurrentUser(): void {
-    this.currentUserSubject.next(null);
-  }
-
-  isLoggedIn(): boolean {
-    return this.getCurrentUser() !== null;
+  getUserId(): string | null {
+    const user = this.getUser();
+    if (user) {
+      return user._id;
+    }
+    return sessionStorage.getItem('userId');
   }
 }

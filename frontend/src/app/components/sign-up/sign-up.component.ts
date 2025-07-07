@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CreateUserRequest, AuthResponse } from '../../models/user';
-import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -41,7 +41,7 @@ export class SignUpComponent {
     this.api.signUp(this.user).subscribe({
       next: (response: AuthResponse) => {
         if (response.user && response.user._id) {
-          this.userService.setCurrentUser(response.user);
+          this.userService.setUser(response.user);
           this.router.navigate(['/tasks']);
         } else {
           this.errorMessage = 'Invalid response from server';
