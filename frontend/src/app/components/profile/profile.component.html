@@ -1,0 +1,64 @@
+<div class="profile-container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="row-md-6 col-lg-4">
+        <div class="card profile-card">
+          <div class="card-body">
+            <h2 class="profile-title text-center">Edit Profile</h2>
+            <form (ngSubmit)="onUpdateProfile()" #profileForm="ngForm"></form>
+            <div class="form-group">
+              <label for="firstName" class="form-label">First Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="firstName"
+                name="firstName"
+                placeholder="Enter your first name"
+                required
+                [(ngModel)]="user.firstName"
+              />
+              <label for="lastName" class="form-label">Last Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="lastName"
+                name="lastName"
+                placeholder="Enter your last name"
+                required
+                [(ngModel)]="user.lastName"
+              />
+              <label for="email" class="form-label">Email Address</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+                [(ngModel)]="user.email"
+              />
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+                [(ngModel)]="user.password"
+              />
+              <button
+                type="submit"
+                class="btn btn-update mt-4"
+                [disabled]="isLoading || !profileForm.form.valid"
+                (click)="onUpdateProfile()"
+              >
+                {{ isLoading ? "Updating..." : "Update Profile" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

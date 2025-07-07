@@ -6,6 +6,7 @@ export interface CreateUserRequest {
 }
 
 export interface UpdateUserRequest {
+  id: string;
   firstName?: string;
   lastName?: string;
   email?: string;
