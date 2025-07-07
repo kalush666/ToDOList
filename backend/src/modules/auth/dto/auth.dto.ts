@@ -32,6 +32,7 @@ export class LoginResponseDto {
     firstName: string;
     lastName: string;
     email: string;
+    role: string;
   };
 }
 
@@ -41,5 +42,6 @@ export class SignUpResponseDto {
     firstName: string;
     lastName: string;
     email: string;
+    role: string;
   };
 }

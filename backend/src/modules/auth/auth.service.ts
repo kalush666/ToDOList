@@ -35,6 +35,7 @@ export class AuthService {
         firstName: userDoc.firstName,
         lastName: userDoc.lastName,
         email: userDoc.email,
+        role: userDoc.role,
       },
     };
   }
@@ -53,6 +54,7 @@ export class AuthService {
       email,
       password,
     });
+    newUser.role;
 
     return {
       user: {
@@ -60,6 +62,7 @@ export class AuthService {
         firstName: newUser.firstName,
         lastName: newUser.lastName,
         email: newUser.email,
+        role: newUser.role,
       },
     };
   }

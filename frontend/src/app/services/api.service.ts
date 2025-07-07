@@ -38,24 +38,34 @@ export class ApiService {
 
   login(credentials: LoginRequest): Observable<AuthResponse> {
     const url = `${API_CONFIG.BASE_URL}${API_ENDPOINTS.AUTH.LOGIN}`;
-    return this.client.post<AuthResponse>(url, credentials, httpOptions).pipe(
-      catchError(
-        this.handleError(ERROR_OPERATIONS.LOGIN, {
-          user: {} as User,
-        })
-      )
-    );
+    return this.client
+      .post<AuthResponse>(url, credentials, {
+        ...httpOptions,
+        withCredentials: true,
+      })
+      .pipe(
+        catchError(
+          this.handleError(ERROR_OPERATIONS.LOGIN, {
+            user: {} as User,
+          })
+        )
+      );
   }
 
   signUp(credentials: CreateUserRequest): Observable<AuthResponse> {
     const url = `${API_CONFIG.BASE_URL}${API_ENDPOINTS.AUTH.SIGNUP}`;
-    return this.client.post<AuthResponse>(url, credentials, httpOptions).pipe(
-      catchError(
-        this.handleError(ERROR_OPERATIONS.CREATE_USER, {
-          user: {} as User,
-        })
-      )
-    );
+    return this.client
+      .post<AuthResponse>(url, credentials, {
+        ...httpOptions,
+        withCredentials: true,
+      })
+      .pipe(
+        catchError(
+          this.handleError(ERROR_OPERATIONS.CREATE_USER, {
+            user: {} as User,
+          })
+        )
+      );
   }
 
   getUser(id: string): Observable<User> {

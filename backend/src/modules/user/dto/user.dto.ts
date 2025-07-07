@@ -51,4 +51,5 @@ export class UserResponseDto {
   email: string;
   createdAt: Date;
   updatedAt: Date;
+  role: string;
 }

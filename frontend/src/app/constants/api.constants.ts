@@ -1,6 +1,6 @@
 import { ADMIN } from '../../../../backend/src/constants/roles.constants';
 export const API_CONFIG = {
-  BASE_URL: 'http://localhost:3000/api',
+  BASE_URL: '/api', // Use relative URL for proxy
   TIMEOUT: 10000,
 } as const;
 

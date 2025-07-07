@@ -11,21 +11,14 @@ export class UserService {
 
   setUser(user: User) {
     this.userSubject.next(user);
-    sessionStorage.setItem('userId', user._id);
   }
 
   getUser(): User | null {
-    const user = this.userSubject.getValue();
-    if (user) {
-      return user;
-    }
-    return null;
+    return this.userSubject.getValue();
   }
+
   getUserId(): string | null {
     const user = this.getUser();
-    if (user) {
-      return user._id;
-    }
-    return sessionStorage.getItem('userId');
+    return user ? user._id : null;
   }
 }
