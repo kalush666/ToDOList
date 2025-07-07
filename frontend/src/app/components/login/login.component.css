@@ -1,6 +1,5 @@
 .login-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,15 +19,11 @@
 }
 
 .login-title {
-  color: #333;
-  font-weight: 600;
   margin-bottom: 2rem;
   font-size: 1.8rem;
 }
 
 .form-label {
-  font-weight: 500;
-  color: #555;
   margin-bottom: 0.5rem;
 }
 
@@ -47,7 +42,6 @@
 }
 
 .btn-login {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: none;
   border-radius: 10px;
   padding: 0.75rem 2rem;
@@ -74,7 +68,6 @@
 }
 
 .form-control::placeholder {
-  color: #adb5bd;
   font-style: italic;
 }
 
