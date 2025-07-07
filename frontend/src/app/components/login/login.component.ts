@@ -3,6 +3,7 @@ import { LoginRequest } from '../../models/user';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { ValidationHelper } from '../../helpers/validation.helper';
 
 @Component({
   selector: 'app-login',
@@ -26,12 +27,17 @@ export class LoginComponent {
   isLoading: boolean = false;
 
   onLogin() {
-    if (this.user.email && this.user.password) {
+    this.errorMessage = ValidationHelper.getErrorMessage(
+      this.user.email,
+      this.user.password
+    );
+    if (!this.errorMessage) {
       this.isLoading = true;
       this.errorMessage = '';
 
       this.api.login(this.user).subscribe({
         next: (response) => {
+          console.log('Login response:', response);
           if (response.user && response.user._id) {
             this.userService.setUser(response.user);
             this.router.navigate(['/tasks']);

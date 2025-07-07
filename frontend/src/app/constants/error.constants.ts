@@ -7,6 +7,9 @@ export const ERROR_MESSAGES = {
   SERVER_ERROR: 'Internal server error occurred',
   VALIDATION_ERROR: 'Invalid data provided',
   UNKNOWN_ERROR: 'An unknown error occurred',
+  INVALID_MAIL: 'Invalid email address',
+  INVALID_PASSWORD:
+    'Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number',
 } as const;
 
 export const ERROR_OPERATIONS = {
