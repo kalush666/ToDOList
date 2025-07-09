@@ -8,10 +8,14 @@ import {
 import { UserService } from '../user/user.service';
 import { UserDocument } from '../user/interfaces/user.interface';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   async login(loginDto: LoginDto): Promise<LoginResponseDto> {
     const { email, password } = loginDto;
@@ -28,6 +32,8 @@ export class AuthService {
     }
 
     const userDoc = user as UserDocument;
+    const paylod = { sub: userDoc._id.toString(), role: userDoc.role };
+    const accessToken = await this.jwtService.signAsync(paylod);
 
     return {
       user: {
@@ -37,6 +43,7 @@ export class AuthService {
         email: userDoc.email,
         role: userDoc.role,
       },
+      access_token: accessToken,
     };
   }
 
@@ -56,6 +63,9 @@ export class AuthService {
     });
     newUser.role;
 
+    const paylod = { sub: newUser._id.toString(), role: newUser.role };
+    const accessToken = await this.jwtService.signAsync(paylod);
+
     return {
       user: {
         _id: newUser._id.toString(),
@@ -64,6 +74,7 @@ export class AuthService {
         email: newUser.email,
         role: newUser.role,
       },
+      access_token: accessToken,
     };
   }
 }

@@ -8,6 +8,7 @@ import { User } from '../models/user';
 export class UserService {
   constructor() {}
   private userSubject = new BehaviorSubject<User | null>(null);
+  private token: string | null = null;
 
   setUser(user: User) {
     this.userSubject.next(user);
@@ -20,5 +21,13 @@ export class UserService {
   getUserId(): string | null {
     const user = this.getUser();
     return user ? user._id : null;
+  }
+
+  setToken(token: string) {
+    this.token = token;
+  }
+
+  getToken(): string | null {
+    return this.token;
   }
 }

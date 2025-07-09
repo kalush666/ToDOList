@@ -25,10 +25,12 @@ export interface User {
   email: string;
   createdAt: Date;
   updatedAt: Date;
+  role: string;
 }
 
 export interface AuthResponse {
   user: User;
+  access_token: string;
 }
 
 export interface UserForm {

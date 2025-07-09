@@ -1,32 +1,41 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
+import { JwtService } from '@nestjs/jwt';
+import { Request } from 'express';
 import { ROLE } from 'src/constants/roles.constants';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(
+    private jwtService: JwtService,
+    private reflector: Reflector,
+  ) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
     const requiredRole = this.reflector.getAllAndOverride<string>(ROLE, [
       context.getHandler(),
       context.getClass(),
     ]);
-
-    if (!requiredRole) {
-      return true;
-    }
-
-    const request = context.switchToHttp().getRequest();
-    if (!request.session || typeof request.session !== 'object') {
+    const token = this.extractTokenFromHeader(request);
+    if (!token) {
       return false;
     }
-    const userRole = request.session.role;
-    if (!userRole) {
+    console.log('Token extracted:', token);
+    try {
+      const payload = await this.jwtService.verifyAsync(token);
+      console.log('Payload:', payload);
+      request.user = payload;
+      if (!requiredRole) return true;
+      console.log('Required role:', requiredRole);
+      return payload.role === requiredRole;
+    } catch (error) {
       return false;
     }
-    return userRole === requiredRole;
+  }
+
+  private extractTokenFromHeader(request: Request): string | undefined {
+    const [type, token] = request.headers.authorization?.split(' ') ?? [];
+    return type === 'Bearer' ? token : undefined;
   }
 }

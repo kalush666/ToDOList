@@ -41,12 +41,20 @@ export class ApiService {
     return this.client
       .post<AuthResponse>(url, credentials, {
         ...httpOptions,
-        withCredentials: true,
       })
       .pipe(
+        tap((response) => {
+          if (response && response.access_token) {
+            // Save token to UserService if injected
+            (window as any).userServiceInstance?.setToken(
+              response.access_token
+            );
+          }
+        }),
         catchError(
           this.handleError(ERROR_OPERATIONS.LOGIN, {
             user: {} as User,
+            access_token: '',
           })
         )
       );
@@ -57,12 +65,19 @@ export class ApiService {
     return this.client
       .post<AuthResponse>(url, credentials, {
         ...httpOptions,
-        withCredentials: true,
       })
       .pipe(
+        tap((response) => {
+          if (response && response.access_token) {
+            (window as any).userServiceInstance?.setToken(
+              response.access_token
+            );
+          }
+        }),
         catchError(
           this.handleError(ERROR_OPERATIONS.CREATE_USER, {
             user: {} as User,
+            access_token: '',
           })
         )
       );
@@ -104,5 +119,22 @@ export class ApiService {
           this.handleError<void>(ERROR_OPERATIONS.DELETE_USER, undefined)
         )
       );
+  }
+
+  canAccessAdmin(token: string | null): Observable<boolean> {
+    const headers = token
+      ? new HttpHeaders({
+          [HTTP_HEADERS.CONTENT_TYPE]: MIME_TYPES.JSON,
+          Authorization: `Bearer ${token}`,
+        })
+      : new HttpHeaders({ [HTTP_HEADERS.CONTENT_TYPE]: MIME_TYPES.JSON });
+    const url = `${API_CONFIG.BASE_URL}${API_ENDPOINTS.ADMIN.CAN_ACCESS}`;
+    return this.client.get<boolean>(url, { headers }).pipe(
+      tap(() => of(true)),
+      catchError((error) => {
+        console.error('Admin access check failed:', error);
+        return of(false);
+      })
+    );
   }
 }

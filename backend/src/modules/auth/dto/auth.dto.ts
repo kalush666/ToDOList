@@ -34,6 +34,7 @@ export class LoginResponseDto {
     email: string;
     role: string;
   };
+  access_token: string;
 }
 
 export class SignUpResponseDto {
@@ -44,4 +45,5 @@ export class SignUpResponseDto {
     email: string;
     role: string;
   };
+  access_token: string;
 }

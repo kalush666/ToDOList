@@ -6,9 +6,12 @@ import {
   Put,
   Delete,
   Param,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UpdateUserDto, UserResponseDto } from './dto/user.dto';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Role } from 'src/common/decorators/role.decorator';
 
 @Controller('users')
 export class UserController {
@@ -22,6 +25,14 @@ export class UserController {
   @Get()
   async findAll(): Promise<UserResponseDto[]> {
     return await this.userService.findAll();
+  }
+
+  @UseGuards(RolesGuard)
+  @Role('admin')
+  @Get('admin/can-access')
+  canAccessAdmin(): boolean {
+    console.log('canAccessAdmin controller called');
+    return true;
   }
 
   @Get(':id')

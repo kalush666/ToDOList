@@ -42,6 +42,7 @@ export class SignUpComponent {
       next: (response: AuthResponse) => {
         if (response.user && response.user._id) {
           this.userService.setUser(response.user);
+          this.userService.setToken(response.access_token);
           this.router.navigate(['/tasks']);
         } else {
           this.errorMessage = 'Invalid response from server';
