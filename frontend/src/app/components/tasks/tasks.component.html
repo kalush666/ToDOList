@@ -8,8 +8,10 @@
       height="64"
       (click)="editProfile()"
     />
-    <button class="btn btn-danger">Log Out</button>
-    {{ isAdmin }}
+    <button class="btn btn-danger" (click)="onLogOut()">Log Out</button>
+    <div *ngIf="isAdmin" class="admin-panel-container">
+      <a class="btn btn-primary" [routerLink]="['/admin']">Admin Panel</a>
+    </div>
   </header>
   <div class="container">
     <h1>My Tasks</h1>

@@ -106,7 +106,6 @@
 }
 
 .btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border: none;
   border-radius: 8px;
   padding: 0.6rem 1.3rem;
@@ -119,6 +118,9 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+.add-task-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
 
 .profile-pic {
   border-radius: 50%;
@@ -127,4 +129,30 @@
   height: 64px;
   object-fit: cover;
   cursor: pointer;
+}
+
+header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 2rem 1.5rem 2rem;
+}
+
+.admin-panel-container {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.btn-danger {
+  margin-left: 24px;
+}
+
+.admin-panel-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 16px;
+  z-index: 10;
 }

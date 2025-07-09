@@ -17,6 +17,10 @@ export class UserService {
   getUser(): User | null {
     return this.userSubject.getValue();
   }
+  clearUser() {
+    this.userSubject.next(null);
+    this.token = null;
+  }
 
   getUserId(): string | null {
     const user = this.getUser();

@@ -20,6 +20,8 @@ import { TaskComponent } from './components/task/task.component';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AdminConsoleComponent } from './components/admin-console/admin-console.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     EditTaskComponent,
     AddTaskComponent,
     ProfileComponent,
+    AdminConsoleComponent,
+    UserCardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [

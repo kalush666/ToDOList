@@ -5,7 +5,6 @@ import {
   MIME_TYPES,
   API_CONFIG,
   ERROR_OPERATIONS,
-  LOG_LEVELS,
   API_ENDPOINTS,
 } from '../constants';
 import { catchError, Observable, tap, of } from 'rxjs';
@@ -45,7 +44,6 @@ export class ApiService {
       .pipe(
         tap((response) => {
           if (response && response.access_token) {
-            // Save token to UserService if injected
             (window as any).userServiceInstance?.setToken(
               response.access_token
             );

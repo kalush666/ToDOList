@@ -104,4 +104,8 @@ export class TasksComponent implements OnInit {
   editProfile() {
     this.router.navigate(['/profile']);
   }
+  onLogOut() {
+    this.userService.clearUser();
+    this.router.navigate(['/login']);
+  }
 }

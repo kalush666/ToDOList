@@ -6,6 +6,7 @@ import { TasksComponent } from './components/tasks/tasks.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { EditTaskComponent } from './components/edit-task/edit-task.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { AdminConsoleComponent } from './components/admin-console/admin-console.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,6 +21,7 @@ const routes: Routes = [
     ],
   },
   { path: 'profile', component: ProfileComponent },
+  { path: 'admin', component: AdminConsoleComponent },
 ];
 
 @NgModule({
